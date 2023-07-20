@@ -1,1 +1,24 @@
+import textdistance
+
+# Sample list of correct words
+dictionary = ["apple", "banana", "orange", "grape", "peach", "pear", "cherry", "kiwi"]
+
+# Function to find the nearest word in the dictionary
+def find_nearest_word(input_word, dictionary):
+    min_distance = float('inf')
+    nearest_word = None
+
+    for word in dictionary:
+        distance = textdistance.levenshtein.normalized_similarity(input_word, word)
+        if distance < min_distance:
+            min_distance = distance
+            nearest_word = word
+
+    return nearest_word
+
+# Example usage:
+input_word = "oranfe"
+nearest_word = find_nearest_word(input_word, dictionary)
+print("Input Word:", input_word)
+print("Nearest Word:", nearest_word)
 
