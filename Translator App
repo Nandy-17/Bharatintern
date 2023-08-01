@@ -1,0 +1,48 @@
+from googletrans import Translator, LANGUAGES
+
+def get_supported_languages():
+    """
+    Get a dictionary of supported languages and their language codes.
+    """
+    return {code: lang for code, lang in LANGUAGES.items()}
+
+def translate_text(text, target_lang, source_lang='auto'):
+    """
+    Translate the given text to the target language.
+    If the source language is not specified ('auto'), Google Translate API will auto-detect it.
+    """
+    translator = Translator()
+    translation = translator.translate(text, src=source_lang, dest=target_lang)
+    return translation.text
+
+def main():
+    print("Welcome to the Translator AI!")
+    supported_languages = get_supported_languages()
+
+    print("\nSupported Languages:")
+    for code, lang in supported_languages.items():
+        print(f"{code}: {lang}")
+
+    while True:
+        source_lang = input("\nEnter the source language code ('auto' for auto-detection): ")
+        if source_lang == 'exit':
+            break
+        if source_lang not in supported_languages.keys() and source_lang != 'auto':
+            print("Invalid source language code. Please try again or type 'exit' to quit.")
+            continue
+
+        target_lang = input("Enter the target language code: ")
+        if target_lang not in supported_languages.keys():
+            print("Invalid target language code. Please try again.")
+            continue
+
+        text_to_translate = input("Enter the text to translate: ")
+        if text_to_translate == 'exit':
+            break
+
+        translated_text = translate_text(text_to_translate, target_lang, source_lang)
+        print(f"\nTranslated Text ({supported_languages.get(target_lang)}):")
+        print(translated_text)
+
+if __name__ == "__main__":
+    main()
